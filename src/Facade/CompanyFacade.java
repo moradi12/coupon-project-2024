@@ -29,6 +29,10 @@ public class CompanyFacade {
         }
     }
 
+    /**
+     *
+     * @param coupon
+     */
     public void addCoupon(Coupon coupon) {
         List<Coupon> companyCoupons = couponsDAO.getAllCoupons();
         boolean titleExists = companyCoupons.stream()
@@ -69,6 +73,11 @@ public class CompanyFacade {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException - if we got an sql exception for any reason
+     */
     public List<Coupon> getAllCoupons() throws SQLException {
         int companyId = 1; // Replace with the actual company ID
         return couponsDAO.getAllCouponsByCompany(companyId);

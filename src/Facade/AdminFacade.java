@@ -75,6 +75,7 @@ public class AdminFacade {
             throw new AdminException("Failed to retrieve company. Reason: " + e.getMessage());
         }
     }
+
     public class AdminException extends Exception {
 
         public AdminException(String message) {

@@ -12,6 +12,7 @@ public class SQLcommands {
                     "  `city` VARCHAR(45) NULL," +
                     "  PRIMARY KEY (`id`));";
 
+
     public static final String addStudent = "INSERT INTO `class169`.`students` " +
             "(`name`, `tel`, `avgGrade`, `city`, `married`) " +
             "VALUES (?, ?, ?, ?, ?);";
@@ -22,6 +23,9 @@ public class SQLcommands {
 
     public static final String getStudentBetwen = "SELECT * FROM `class169`.`students` WHERE avgGrade>? AND avgGrade<?";
     //CRUD
+    /**
+     *
+     */
     public static final String createCompaniesTable = "" +
             "CREATE TABLE `companies` (" +
             "  `id` INT NOT NULL AUTO_INCREMENT," +
