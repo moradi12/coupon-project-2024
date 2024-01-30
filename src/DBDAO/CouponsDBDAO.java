@@ -39,6 +39,7 @@ public class CouponsDBDAO implements CouponsDAO {
     public void deleteCouponPurchase(int customerID, int couponID) {
 
     }
+
     @Override
     public void deleteCouponPurchaseHistory(int couponID) {
         // Implement the logic to delete purchase history associated with the coupon
@@ -55,5 +56,5 @@ public class CouponsDBDAO implements CouponsDAO {
 //    @Override
 //    public List<Coupon> getAllCouponsByCompany(int companyId) {
 //        return null;
-    }
+}
 

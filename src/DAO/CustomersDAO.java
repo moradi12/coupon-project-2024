@@ -1,22 +1,23 @@
 package DAO;
 
-import Sql.Customers;
+import Facade.AdminFacade;
+import Sql.Customer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CustomersDAO {
 
-    public boolean isCustomerExsists(String email, String password);
+    boolean isCustomerExists(String email, String password);
 
-    public void addCustomer(Customers customers);
+    void addCustomer(Customer customer);
 
-    public void updateCustomer(Customers customers);
+    void updateCustomer(Customer customer) throws AdminFacade.AdminException;
 
-    public void deleteCustomer(int customersID);
+    void deleteCustomer(int customerId) throws AdminFacade.AdminException;
 
-    public ArrayList<Customers> getAllCustomers();
+    List<beans.Customer> getAllCustomers() throws AdminFacade.AdminException;
 
-    public Customers getOneCustomer(int customerID);
+    Customer getOneCustomer(int customerID) throws AdminFacade.AdminException;
 
-
+    void updateCustomer(beans.Customer customer) throws AdminFacade.AdminException;
 }

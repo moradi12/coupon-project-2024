@@ -2,9 +2,9 @@ package DBDAO;
 
 import CLS.ConnectionPool;
 import DAO.CustomersDAO;
-import Sql.Customers;
+import Sql.Customer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CustomersDBDAO implements CustomersDAO {
 
@@ -12,17 +12,17 @@ public class CustomersDBDAO implements CustomersDAO {
     private ConnectionPool connectionPool;
 
     @Override
-    public boolean isCustomerExsists(String email, String password) {
+    public boolean isCustomerExists(String email, String password) {
         return false;
     }
 
     @Override
-    public void addCustomer(Customers customers) {
+    public void addCustomer(Customer customers) {
 
     }
 
     @Override
-    public void updateCustomer(Customers customers) {
+    public void updateCustomer(Customer customers) {
 
     }
 
@@ -32,12 +32,17 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public ArrayList<Customers> getAllCustomers() {
+    public List<beans.Customer> getAllCustomers() {
         return null;
     }
 
     @Override
-    public Customers getOneCustomer(int customerID) {
+    public Customer getOneCustomer(int customerID) {
         return null;
+    }
+
+    @Override
+    public void updateCustomer(beans.Customer customer) {
+
     }
 }

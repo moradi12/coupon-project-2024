@@ -1,8 +1,10 @@
 import CLS.DButils;
+import Clients.ClientType;
+import LoginManagerSyst.LoginManager;
 import Sql.categories;
 import Sql.companies;
 import Sql.coupons;
-import Sql.Customers;
+import Sql.Customer;
 import Sql.customers_vs_coupons;
 
 public class CreateTableMain {
@@ -17,7 +19,9 @@ public class CreateTableMain {
         DButils.runQuery(categories.CREATE_TABLE_CATEGORIES);
         DButils.runQuery(companies.CREATE_TABLE_COMPANIES);
         DButils.runQuery(coupons.CREATE_TABLE_COUPONS);
-        DButils.runQuery(Customers.CREATE_TABLE_CUSTOMERS);
+        DButils.runQuery(Customer.CREATE_TABLE_CUSTOMERS);
         DButils.runQuery(customers_vs_coupons.CREATE_TABLE_CVC);
+
     }
+
 }

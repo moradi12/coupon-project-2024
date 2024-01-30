@@ -1,6 +1,6 @@
 package Sql;
 
-public class Customers {
+public class Customer {
 
     public static final String CREATE_TABLE_CUSTOMERS =
             "CREATE TABLE IF NOT EXISTS `couponnnn`.`customers` (" +
