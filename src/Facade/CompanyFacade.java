@@ -1,5 +1,6 @@
 package Facade;
 
+import beans.Category;
 import beans.Coupon;
 import DAO.CompaniesDAO;
 import DAO.CouponsDAO;
@@ -30,7 +31,6 @@ public class CompanyFacade {
     }
 
     /**
-     *
      * @param coupon
      */
     public void addCoupon(Coupon coupon) {
@@ -74,16 +74,41 @@ public class CompanyFacade {
     }
 
     /**
-     *
      * @return
      * @throws SQLException - if we got an sql exception for any reason
      */
     public List<Coupon> getAllCoupons() throws SQLException {
-        int companyId = 1; // Replace with the actual company ID
+        int companyId = 1;
         return couponsDAO.getAllCouponsByCompany(companyId);
     }
 
     private void handleSQLException(SQLException e) {
-        System.err.println("An error occurred: " + e.getMessage());
+        System.out.println("An error occurred: " + e.getMessage());
+    }
+
+    public List<Coupon> getAllCouponsByCategory(Category category) throws SQLException {
+        int companyId = 1;
+        return couponsDAO.getAllCouponsByCategoryAndCompany(category, companyId);
+    }
+
+    public List<Coupon> getAllCouponsByUpToPrice(double price) throws SQLException {
+        int companyId = 1;
+        return couponsDAO.getAllCouponsUpToPriceAndCompany(price, companyId);
+    }
+
+    public String returnCompanyDetails(String email, String password) {
+        try {
+            if (companiesDAO.isCompanyExists(email, password)) {
+                return companiesDAO.getCompanyDetails(email);
+            } else {
+                return "Login failed";
+            }
+        } catch (SQLException e) {
+            handleSQLException(e);
+            return "An error occurred while fetching company details";
+        }
     }
 }
+
+
+

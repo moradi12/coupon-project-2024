@@ -16,4 +16,17 @@ public class coupons {
                     "PRIMARY KEY (`ID`)," +
                     "UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE" +
                     ");";
+
+
+    // Insert a new coupon
+    public static final String addCoupon = "INSERT INTO `couponnnn`.`coupons` " +
+            "(`COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+    // Get all coupons
+    public static final String getAllCoupons = "SELECT * FROM `couponnnn`.`coupons`";
+
+    // Get coupon by ID
+    public static final String getCouponById = "SELECT * FROM `couponnnn`.`coupons` WHERE ID=?";
 }
+

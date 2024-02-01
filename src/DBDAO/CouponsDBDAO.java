@@ -2,6 +2,7 @@ package DBDAO;
 
 import CLS.ConnectionPool;
 import DAO.CouponsDAO;
+import beans.Category;
 import beans.Coupon;
 
 import java.util.ArrayList;
@@ -52,9 +53,16 @@ public class CouponsDBDAO implements CouponsDAO {
     public List<Coupon> getAllCouponsByCompany(int companyId) {
         return null;
     }
-// add it
-//    @Override
-//    public List<Coupon> getAllCouponsByCompany(int companyId) {
-//        return null;
-}
 
+    @Override
+    public List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId) {
+        return null;
+    }
+
+    @Override
+    public List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId) {
+        return null;
+    }
+
+
+}

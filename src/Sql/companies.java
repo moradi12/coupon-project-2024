@@ -1,4 +1,3 @@
-// companies class
 package Sql;
 
 public class companies {
@@ -12,4 +11,16 @@ public class companies {
                     "UNIQUE INDEX `EMAIL_UNIQUE` (`EMAIL` ASC) VISIBLE," +
                     "UNIQUE INDEX `idCOMPANIES_UNIQUE` (`idCOMPANIES` ASC) VISIBLE" +
                     ");";
+
+    public static final String addCompany = "INSERT INTO `couponnnn`.`companies` " +
+            "(`NAME`, `EMAIL`, `PASSWORD`) " +
+            "VALUES (?, ?, ?);";
+
+    public static final String getAllCompanies = "SELECT * FROM `couponnnn`.`companies`";
+
+    public static final String getCompanyByEmailAndPassword = "SELECT * FROM `couponnnn`.`companies` " +
+            "WHERE EMAIL=? AND PASSWORD=?";
+
+    public static final String getCompanyById = "SELECT * FROM `couponnnn`.`companies` WHERE idCOMPANIES=?";
+
 }

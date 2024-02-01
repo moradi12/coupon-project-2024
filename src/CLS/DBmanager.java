@@ -28,7 +28,6 @@ public class DBmanager {
             // Create and return the database connection using try-with-resources
             return DriverManager.getConnection(URL, SQL_USER, SQL_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
             throw new SQLException("Error establishing database connection", e);
         }
 

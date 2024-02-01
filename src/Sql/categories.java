@@ -9,4 +9,6 @@ public class categories {
                     "`DESCRIPTION` TEXT NULL, " +
                     "`CREATED_AT` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "PRIMARY KEY (`ID`));";
+
+    
 }

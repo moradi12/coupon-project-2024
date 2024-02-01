@@ -1,5 +1,6 @@
 package DAO;
 
+import beans.Category;
 import beans.Coupon;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface CouponsDAO {
     void deleteCouponPurchaseHistory(int couponID);
 
     List<Coupon> getAllCouponsByCompany(int companyId);
+
+    List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId);
+
+    List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId);
 }

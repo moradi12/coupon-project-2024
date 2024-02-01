@@ -18,7 +18,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
     @Override
     public boolean isCompanyExists(String email, String password) throws SQLException {
-        // Implementation that might throw SQLException
         return false;
     }
 
@@ -45,4 +44,12 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Company company = null;
         return company;
     }
+
+    @Override
+    public String getCompanyDetails(String email) {
+        return null;
+    }
 }
+
+
+
