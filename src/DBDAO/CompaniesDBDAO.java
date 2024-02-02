@@ -26,7 +26,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public void updateCompany(Company company) throws SQLException {
+    public void updateCompany(Company company) throws SQLException { 
     }
 
     @Override

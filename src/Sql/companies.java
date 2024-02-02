@@ -12,6 +12,7 @@ public class companies {
                     "UNIQUE INDEX `idCOMPANIES_UNIQUE` (`idCOMPANIES` ASC) VISIBLE" +
                     ");";
 
+
     public static final String addCompany = "INSERT INTO `couponnnn`.`companies` " +
             "(`NAME`, `EMAIL`, `PASSWORD`) " +
             "VALUES (?, ?, ?);";
@@ -22,5 +23,6 @@ public class companies {
             "WHERE EMAIL=? AND PASSWORD=?";
 
     public static final String getCompanyById = "SELECT * FROM `couponnnn`.`companies` WHERE idCOMPANIES=?";
+
 
 }

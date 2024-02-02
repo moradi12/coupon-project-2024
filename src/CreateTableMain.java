@@ -20,8 +20,8 @@ public class CreateTableMain {
         DButils.runQuery(companies.CREATE_TABLE_COMPANIES);
         DButils.runQuery(coupons.CREATE_TABLE_COUPONS);
         DButils.runQuery(Customer.CREATE_TABLE_CUSTOMERS);
+
+        // Add customers_vs_coupons
         DButils.runQuery(customers_vs_coupons.CREATE_TABLE_CVC);
-
     }
-
 }

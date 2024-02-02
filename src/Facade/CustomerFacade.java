@@ -10,7 +10,7 @@ public class CustomerFacade extends ClientFacade {
 
     private int customerId;
 
-    public boolean login(String email, String password) {
+    public Boolean login(String email, String password) {
         return false;
     }
 

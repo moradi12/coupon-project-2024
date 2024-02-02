@@ -1,27 +1,31 @@
 package Facade;
 
-import DAO.CompaniesDAO;
-import DAO.CouponsDAO;
-import DAO.CustomersDAO;
 import DBDAO.CompaniesDBDAO;
 import DBDAO.CouponsDBDAO;
 import DBDAO.CustomersDBDAO;
 
-//implements CompaniesDAO, CustomersDAO, CouponsDAO//
+import java.sql.SQLException;
+
+
 public abstract class ClientFacade {
 
-    protected CompaniesDBDAO companiesDBDAO;
-    protected CustomersDBDAO customersDBDAO;
-    protected CouponsDBDAO couponsDBDAO;
+    protected static CustomersDBDAO customerDBDAO = new CustomersDBDAO();
+    protected static CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
+    protected static CouponsDBDAO couponDBDAO = new CouponsDBDAO();
 
     /**
+     * Login method to authenticate a client.
+     *
      * @param email    user email
      * @param password user password
-     * @return
+     * @return Client object if login successful, otherwise null
+     * @throws SQLException if an SQL exception occurs
      */
-    public boolean login(String email, String password) {
-        return false;
+    public Boolean login(String email, String password) throws SQLException {
+        if (customerDBDAO.isCustomerExists(email, password)) {
+            return customerDBDAO.getOneCustomer(email, password);
+        } else {
+            return null;
+        }
     }
-
-
 }
