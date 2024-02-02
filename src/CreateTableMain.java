@@ -26,7 +26,7 @@ public class CreateTableMain {
             connection.commit();
             System.out.println("Table creation completed successfully.");
         } catch (SQLException e) {
-            System.err.println("Error during table creation: " + e.getMessage());
+            System.out.println("Error during table creation: " + e.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public class CreateTableMain {
             statement.executeUpdate(createTableQuery);
             System.out.println("Table created successfully.");
         } catch (SQLException e) {
-            System.err.println("Error creating table: " + e.getMessage());
+            System.out.println("Error creating table: " + e.getMessage());
             throw e;
         }
     }
