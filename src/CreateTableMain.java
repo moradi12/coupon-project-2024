@@ -23,6 +23,7 @@ public class CreateTableMain {
             createTable(connection, Customer.CREATE_TABLE_CUSTOMERS);
             createTable(connection, customers_vs_coupons.CREATE_TABLE_CVC);
 
+
             connection.commit();
             System.out.println("Table creation completed successfully.");
         } catch (SQLException e) {

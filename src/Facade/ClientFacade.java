@@ -1,18 +1,25 @@
 package Facade;
-
 import DBDAO.CompaniesDBDAO;
 import DBDAO.CouponsDBDAO;
 import DBDAO.CustomersDBDAO;
-
 import java.sql.SQLException;
 
-
 public abstract class ClientFacade {
-
-    protected static CustomersDBDAO customerDBDAO = new CustomersDBDAO();
-    protected static CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
-    protected static CouponsDBDAO couponDBDAO = new CouponsDBDAO();
-
+    protected CustomersDBDAO customerDBDAO = new CustomersDBDAO();
+    protected CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
+    protected CouponsDBDAO couponDBDAO = new CouponsDBDAO();
+    private boolean isLogged;
+    private final Boolean client;
+    public ClientFacade(String email, String password) throws SQLException {
+        client = login(email, password);
+        if (client != null) {
+            isLogged = true;
+            System.out.println("Logged in successfully");
+        } else {
+            isLogged = false;
+            System.out.println("Login failed try again");
+        }
+    }
     /**
      * Login method to authenticate a client.
      *
@@ -21,11 +28,13 @@ public abstract class ClientFacade {
      * @return Client object if login successful, otherwise null
      * @throws SQLException if an SQL exception occurs
      */
-    public Boolean login(String email, String password) throws SQLException {
-        if (customerDBDAO.isCustomerExists(email, password)) {
-            return customerDBDAO.getOneCustomer(email, password);
-        } else {
-            return null;
-        }
+    public abstract Boolean login(String email, String password) throws SQLException;
+
+    // Protected methods
+    protected boolean isLogged() {
+        return isLogged;
+    }
+    private void checkLoginStatus() {
+        isLogged = client != null;
     }
 }

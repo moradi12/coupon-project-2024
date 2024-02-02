@@ -4,11 +4,16 @@ import Sql.Customer;
 import beans.Category;
 import beans.Coupon;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerFacade extends ClientFacade {
 
     private int customerId;
+
+    public CustomerFacade(String email, String password) throws SQLException {
+        super(email, password);
+    }
 
     public Boolean login(String email, String password) {
         return false;

@@ -2,6 +2,7 @@ package LoginManagerSyst;
 
 import Clients.ClientType;
 import Facade.AdminFacade;
+import Facade.ClientFacade;
 import Facade.CompanyFacade;
 import Facade.CustomerFacade;
 import DAO.CompaniesDAO;
@@ -12,7 +13,6 @@ public class LoginManager {
 
     private LoginManager() {
     }
-
     public static LoginManager getInstance() {
         if (instance == null) {
             synchronized (LoginManager.class) {
@@ -23,30 +23,29 @@ public class LoginManager {
         }
         return instance;
     }
-
-
     // Method to perform login
-    public Object login(String email, String password, ClientType clientType, CompaniesDAO companiesDAO, CouponsDAO
-            couponsDAO) {
-        Object facade = null;
-        switch (clientType) {
-            case administrator:
-                if (email.equals("admin@admin.com") && password.equals("admin_password")) {
-                    facade = new AdminFacade();
-                }
-                break;
-            case company:
-                facade = new CompanyFacade(companiesDAO, couponsDAO);
-                break;
-            case customer:
-                facade = new CustomerFacade();
-                break;
-            default:
-                throw new IllegalArgumentException("Unrecognized client type: " + clientType);
-        }
-        if (facade == null) {
-            System.out.println("Login failed.");
-        }
-        return facade;
-    }
+    public ClientFacade login(String email, String password, ClientType clientType) {
+
 }
+//
+
+//        switch (clientType) {
+//        case administrator:
+//            if (email.equals("admin@admin.com") && password.equals("admin_password")) {
+//                facade = new AdminFacade();
+//            }
+//            break;
+//        case company:
+//            facade = new CompanyFacade();
+//            break;
+//        case customer:
+//            facade = new CustomerFacade();
+//            break;
+//        default:
+//            throw new IllegalArgumentException("Unrecognized client type: " + clientType);
+//    }
+//        if (facade == null) {
+//        System.out.println("Login failed.");
+//    }
+//        return facade;
+////}

@@ -91,6 +91,11 @@ public class AdminFacade extends ClientFacade {
         }
     }
 
+    @Override
+    public Boolean login(String email, String password) throws SQLException {
+        return null;
+    }
+
 //    public Customer getOneCustomer(int customerId) throws AdminException {
 //        try {
 //            return customersDAO.getOneCustomer(customerId);
