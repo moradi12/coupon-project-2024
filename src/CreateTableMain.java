@@ -1,27 +1,42 @@
+import CLS.DBmanager;
 import CLS.DButils;
-import Clients.ClientType;
-import LoginManagerSyst.LoginManager;
 import Sql.categories;
 import Sql.companies;
 import Sql.coupons;
 import Sql.Customer;
 import Sql.customers_vs_coupons;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class CreateTableMain {
     public static void main(String[] args) {
-        // Create database if not exists
-        DButils.runQuery("CREATE DATABASE IF NOT EXISTS couponnnn");
+        try (Connection connection = DBmanager.getConnection()) {
+            DButils.runQuery("CREATE DATABASE IF NOT EXISTS couponnnn");
+            DButils.runQuery("USE couponnnn");
 
-        // Use the created database
-        DButils.runQuery("USE couponnnn");
+            connection.setAutoCommit(false);
+            createTable(connection, categories.CREATE_TABLE_CATEGORIES);
+            createTable(connection, companies.CREATE_TABLE_COMPANIES);
+            createTable(connection, coupons.CREATE_TABLE_COUPONS);
+            createTable(connection, Customer.CREATE_TABLE_CUSTOMERS);
+            createTable(connection, customers_vs_coupons.CREATE_TABLE_CVC);
 
-        // Execute table creation statements
-        DButils.runQuery(categories.CREATE_TABLE_CATEGORIES);
-        DButils.runQuery(companies.CREATE_TABLE_COMPANIES);
-        DButils.runQuery(coupons.CREATE_TABLE_COUPONS);
-        DButils.runQuery(Customer.CREATE_TABLE_CUSTOMERS);
+            connection.commit();
+            System.out.println("Table creation completed successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error during table creation: " + e.getMessage());
+        }
+    }
 
-        // Add customers_vs_coupons
-        DButils.runQuery(customers_vs_coupons.CREATE_TABLE_CVC);
+    private static void createTable(Connection connection, String createTableQuery) throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(createTableQuery);
+            System.out.println("Table created successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error creating table: " + e.getMessage());
+            throw e;
+        }
     }
 }
