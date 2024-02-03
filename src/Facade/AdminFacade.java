@@ -13,20 +13,14 @@ public class AdminFacade extends ClientFacade {
     private CustomersDAO customersDAO;
     private static final String ADMIN_EMAIL = "admin@admin.com";
     private static final String ADMIN_PASSWORD = "admin";
-    public AdminFacade(CompaniesDAO companiesDAO, CustomersDAO customersDAO) {
+
+    public AdminFacade(CompaniesDAO companiesDAO, CustomersDAO customersDAO) throws SQLException {
+        super();
         this.companiesDAO = companiesDAO;
         this.customersDAO = customersDAO;
     }
-    public AdminFacade() {
-    }
-    public boolean adminLogin(String email, String password) {
-        if (email.equals(ADMIN_EMAIL) && password.equals(ADMIN_PASSWORD)) {
-            System.out.println("// Admin login successful");
-            return true;
-        } else {
-            System.out.println("Not admin");
-            return false;
-        }
+
+    public AdminFacade(String email, String password) {
     }
 
     public void addCompany(Company company) throws AdminException {
@@ -60,6 +54,7 @@ public class AdminFacade extends ClientFacade {
             throw new AdminException("Failed to retrieve companies. Reason: " + e.getMessage());
         }
     }
+
     public Company getOneCompany(int companyId) throws AdminException {
         try {
             return companiesDAO.getOneCompany(companyId);
@@ -67,6 +62,7 @@ public class AdminFacade extends ClientFacade {
             throw new AdminException("Failed to retrieve company. Reason: " + e.getMessage());
         }
     }
+
     public void updateCustomer(Customer customer) throws AdminException {
         try {
             customersDAO.updateCustomer(customer);
@@ -92,25 +88,9 @@ public class AdminFacade extends ClientFacade {
     }
 
     @Override
-    public Boolean login(String email, String password) throws SQLException {
-        return null;
+    public boolean login(String email, String password) throws SQLException {
+        return false;
     }
-
-//    public Customer getOneCustomer(int customerId) throws AdminException {
-//        try {
-//            return customersDAO.getOneCustomer(customerId);
-//        } catch (AdminException e) {
-//            throw new AdminException("Failed to retrieve customer. Reason: " + e.getMessage());
-//        }
-//    }
-
-//    public void addCustomer(Customer customer) throws AdminException {
-//        try {
-//            customersDAO.addCustomer(customer);
-//        } catch (SQLException e) {
-//            throw new AdminException("Failed to add customer. Reason: " + e.getMessage());
-//        }
-//    }
 
     public static class AdminException extends Exception {
         public AdminException(String message) {

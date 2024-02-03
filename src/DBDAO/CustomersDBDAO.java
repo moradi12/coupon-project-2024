@@ -44,8 +44,8 @@ public class CustomersDBDAO implements CustomersDAO {
 
     }
 
-    public boolean getOneCustomer(String email, String password) {
-
-        return false;
+    public Customer getOneCustomer(String email, String password) {
+        return null;
     }
+
 }

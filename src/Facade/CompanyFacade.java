@@ -1,24 +1,25 @@
 package Facade;
 
-import beans.Category;
-import beans.Coupon;
 import DAO.CompaniesDAO;
 import DAO.CouponsDAO;
+import beans.Category;
+import beans.Coupon;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class CompanyFacade {
+public class CompanyFacade extends ClientFacade {
 
     private final CompaniesDAO companiesDAO;
     private final CouponsDAO couponsDAO;
 
     public CompanyFacade(CompaniesDAO companiesDAO, CouponsDAO couponsDAO) {
+        super();
         this.companiesDAO = companiesDAO;
         this.couponsDAO = couponsDAO;
     }
 
-    public void login(String email, String password) {
+    public boolean login(String email, String password) {
         try {
             if (companiesDAO.isCompanyExists(email, password)) {
                 System.out.println("Login successful");
@@ -28,11 +29,9 @@ public class CompanyFacade {
         } catch (SQLException e) {
             handleSQLException(e);
         }
+        return false;
     }
 
-    /**
-     * @param coupon
-     */
     public void addCoupon(Coupon coupon) {
         List<Coupon> companyCoupons = couponsDAO.getAllCoupons();
         boolean titleExists = companyCoupons.stream()
@@ -73,16 +72,16 @@ public class CompanyFacade {
         }
     }
 
-    /**
-     * @return
-     * @throws SQLException - if we got an sql exception for any reason
-     */
     public List<Coupon> getAllCoupons() throws SQLException {
         int companyId = 1;
         return couponsDAO.getAllCouponsByCompany(companyId);
     }
 
-    private void handleSQLException(SQLException e) {
+    private void handleSQLException() {
+        handleSQLException(null);
+    }
+
+    public void handleSQLException(SQLException e) {
         System.out.println("An error occurred: " + e.getMessage());
     }
 
@@ -109,6 +108,3 @@ public class CompanyFacade {
         }
     }
 }
-
-
-

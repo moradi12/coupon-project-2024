@@ -5,47 +5,46 @@ import Facade.AdminFacade;
 import Facade.ClientFacade;
 import Facade.CompanyFacade;
 import Facade.CustomerFacade;
-import DAO.CompaniesDAO;
-import DAO.CouponsDAO;
+
+import javax.security.auth.login.LoginException;
+import java.sql.SQLException;
 
 public class LoginManager {
-    private static LoginManager instance;
+    private static volatile LoginManager instance = null;
 
     private LoginManager() {
     }
+
     public static LoginManager getInstance() {
         if (instance == null) {
             synchronized (LoginManager.class) {
-                if (instance == null) {
+                if (instance == null)
                     instance = new LoginManager();
-                }
             }
         }
         return instance;
     }
-    // Method to perform login
-    public ClientFacade login(String email, String password, ClientType clientType) {
 
+    public ClientFacade login(String email, String password, ClientType clientType) throws LoginException, SQLException {
+        if (email == null || password == null) {
+            throw new IllegalArgumentException("Email and password cannot be null");
+        }
+        switch (clientType) {
+            case company:
+                return new CompanyFacade(email, password);
+            case customer:
+                return new CustomerFacade(email, password);
+            case administrator:
+                if (!email.equals("admin@admin.com") || !password.equals("admin")) {
+                    throw new LoginException("Invalid email or password for admin");
+                }
+                return new AdminFacade(email, password);
+            default:
+                throw new IllegalArgumentException("Invalid client type: " + clientType);
+        }
+    }
+
+    public void logout(ClientFacade facade) {
+        facade.logout();
+    }
 }
-//
-
-//        switch (clientType) {
-//        case administrator:
-//            if (email.equals("admin@admin.com") && password.equals("admin_password")) {
-//                facade = new AdminFacade();
-//            }
-//            break;
-//        case company:
-//            facade = new CompanyFacade();
-//            break;
-//        case customer:
-//            facade = new CustomerFacade();
-//            break;
-//        default:
-//            throw new IllegalArgumentException("Unrecognized client type: " + clientType);
-//    }
-//        if (facade == null) {
-//        System.out.println("Login failed.");
-//    }
-//        return facade;
-////}

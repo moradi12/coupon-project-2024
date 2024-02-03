@@ -1,40 +1,37 @@
 package Facade;
+
 import DBDAO.CompaniesDBDAO;
 import DBDAO.CouponsDBDAO;
 import DBDAO.CustomersDBDAO;
 import java.sql.SQLException;
-
 public abstract class ClientFacade {
-    protected CustomersDBDAO customerDBDAO = new CustomersDBDAO();
-    protected CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
-    protected CouponsDBDAO couponDBDAO = new CouponsDBDAO();
-    private boolean isLogged;
-    private final Boolean client;
-    public ClientFacade(String email, String password) throws SQLException {
-        client = login(email, password);
-        if (client != null) {
-            isLogged = true;
-            System.out.println("Logged in successfully");
-        } else {
-            isLogged = false;
-            System.out.println("Login failed try again");
-        }
+    protected CustomersDBDAO customerDBDAO;
+    protected CompaniesDBDAO companiesDBDAO;
+    protected CouponsDBDAO couponDBDAO;
+    protected boolean isLogged;
+    public ClientFacade() {
+        this.customerDBDAO = new CustomersDBDAO();
+        this.companiesDBDAO = new CompaniesDBDAO();
+        this.couponDBDAO = new CouponsDBDAO();
+        this.isLogged = false;
+        System.out.println("ClientFacade instance created.");
     }
-    /**
-     * Login method to authenticate a client.
-     *
-     * @param email    user email
-     * @param password user password
-     * @return Client object if login successful, otherwise null
-     * @throws SQLException if an SQL exception occurs
-     */
-    public abstract Boolean login(String email, String password) throws SQLException;
 
-    // Protected methods
+    public ClientFacade(String email, String password) {
+    }
+
+    public abstract boolean login(String email, String password) throws SQLException;
     protected boolean isLogged() {
         return isLogged;
     }
-    private void checkLoginStatus() {
-        isLogged = client != null;
+    protected void setLogged(boolean logged) {
+        isLogged = logged;
+    }
+    public void logout() {
+        isLogged = false;
+        System.out.println("Logged out.");
+    }
+    protected void handleSQLException(SQLException e) {
+        System.out.println("SQL Exception: " + e.getMessage());
     }
 }
