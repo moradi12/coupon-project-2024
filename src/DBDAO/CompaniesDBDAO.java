@@ -2,6 +2,7 @@ package DBDAO;
 
 import CLS.ConnectionPool;
 import DAO.CompaniesDAO;
+import Facade.AdminFacade;
 import beans.Company;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public boolean isCompanyExists(String email, String password) {
+    public boolean isCompanyExists(String email, String password) throws SQLException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies WHERE email = ? AND password = ?")) {
 
@@ -29,9 +30,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 return resultSet.next();
             }
-        } catch (SQLException e) {
-            System.err.println("Error checking company existence: " + e.getMessage());
-            return false;
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -52,33 +50,81 @@ public class CompaniesDBDAO implements CompaniesDAO {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void updateCompany(Company company) throws SQLException {
-        // Add logic to update a company in the database
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "UPDATE companies SET name = ?, email = ?, password = ? WHERE id = ?")) {
+            statement.setString(1, company.getName());
+            statement.setString(2, company.getEmail());
+            statement.setString(3, company.getPassword());
+            statement.setInt(4, company.getId());
+            statement.executeUpdate();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void deleteCompany(int companyID) throws SQLException {
-        // Add logic to delete a company from the database
+    public void deleteCompany(int companyId) throws SQLException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "DELETE FROM companies WHERE id = ?")) {
+
+            statement.setInt(1, companyId);
+            statement.executeUpdate();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Company> getAllCompanies() throws SQLException {
-        // Add logic to fetch all companies from the database
         List<Company> companies = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies");
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Company company = new Company();
+                company.setId(resultSet.getInt("id"));
+                company.setName(resultSet.getString("name"));
+                company.setEmail(resultSet.getString("email"));
+                company.setPassword(resultSet.getString("password"));
+
+                companies.add(company);
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return companies;
     }
 
     @Override
-    public Company getOneCompany(int companyID) throws SQLException {
-        // Add logic to fetch a single company by ID from the database
+    public Company getOneCompany(int companyId) throws SQLException {
         Company company = null;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies WHERE id = ?")) {
+
+            statement.setInt(1, companyId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    company = new Company();
+                    company.setId(resultSet.getInt("id"));
+                    company.setName(resultSet.getString("name"));
+                    company.setEmail(resultSet.getString("email"));
+                    company.setPassword(resultSet.getString("password"));
+                }
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return company;
     }
 
     @Override
     public String getCompanyDetails(String email) {
-        // Add logic to fetch company details by email from the database
         return null;
     }
 }

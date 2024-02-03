@@ -1,7 +1,4 @@
 package Facade;
-
-import DBDAO.CouponsDBDAO;
-import DBDAO.CustomerDBDAO;
 import Sql.Customer;
 import beans.Category;
 import beans.Coupon;
