@@ -15,5 +15,5 @@ public interface CompaniesDAO {
     List<Company> getAllCompanies() throws SQLException, AdminFacade.AdminException;
     Company getOneCompany(int companyID) throws SQLException, AdminFacade.AdminException;
 
-    String getCompanyDetails(String email);
+    Company getCompanyDetails(String email) throws SQLException;
 }

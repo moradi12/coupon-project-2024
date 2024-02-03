@@ -32,8 +32,9 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     @Override
-    public void addCouponPurchase(int customerID, int couponID) {
+    public boolean addCouponPurchase(int customerID, int couponID) {
 
+        return false;
     }
 
     @Override

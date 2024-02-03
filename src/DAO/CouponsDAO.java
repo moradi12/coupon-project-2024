@@ -10,7 +10,7 @@ public interface CouponsDAO {
     void updateCoupon(Coupon coupon);
     void deleteCoupon(int couponID);
     List<Coupon> getAllCoupons();
-    void addCouponPurchase(int customerID, int couponID);
+    boolean addCouponPurchase(int customerID, int couponID);
     void deleteCouponPurchase(int customerID, int couponID);
     void deleteCouponPurchaseHistory(int couponID);
 

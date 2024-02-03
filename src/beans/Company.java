@@ -62,5 +62,7 @@ public class Company {
     }
 
     public int getInteger() {
+
+        return 0; //
     }
 }

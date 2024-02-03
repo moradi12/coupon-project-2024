@@ -1,3 +1,4 @@
+// LoginManager.java
 package LoginManagerSyst;
 
 import Clients.ClientType;

@@ -95,7 +95,7 @@ public class CompanyFacade extends ClientFacade {
         return couponsDAO.getAllCouponsUpToPriceAndCompany(price, companyId);
     }
 
-    public String returnCompanyDetails(String email, String password) {
+    public Object returnCompanyDetails(String email, String password) {
         try {
             if (companiesDAO.isCompanyExists(email, password)) {
                 return companiesDAO.getCompanyDetails(email);

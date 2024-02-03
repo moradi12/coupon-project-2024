@@ -2,7 +2,6 @@ package DBDAO;
 
 import CLS.ConnectionPool;
 import DAO.CompaniesDAO;
-import Facade.AdminFacade;
 import beans.Company;
 
 import java.sql.Connection;
@@ -124,7 +123,24 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public String getCompanyDetails(String email) {
-        return null;
+    public Company getCompanyDetails(String email) throws SQLException {
+        Company company = null;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies WHERE email = ?")) {
+
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    company = new Company();
+                    company.setId(resultSet.getInt("id"));
+                    company.setName(resultSet.getString("name"));
+                    company.setEmail(resultSet.getString("email"));
+                    company.setPassword(resultSet.getString("password"));
+                }
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return company;
     }
 }
