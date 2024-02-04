@@ -3,6 +3,8 @@ package Facade;
 import DBDAO.CompaniesDBDAO;
 import DBDAO.CouponsDBDAO;
 import DBDAO.CustomersDBDAO;
+import Sql.Customer;
+
 import java.sql.SQLException;
 public abstract class ClientFacade {
     protected CustomersDBDAO customerDBDAO;
@@ -20,7 +22,7 @@ public abstract class ClientFacade {
     public ClientFacade(String email, String password) {
     }
 
-    public abstract boolean login(String email, String password) throws SQLException;
+    public abstract Customer login(String email, String password) throws SQLException;
     protected boolean isLogged() {
         return isLogged;
     }

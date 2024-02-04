@@ -15,7 +15,6 @@ public class Company {
     }
 
     public Company() {
-        // Default constructor
     }
 
     public int getId() {

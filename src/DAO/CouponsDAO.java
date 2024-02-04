@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CouponsDAO {
     void addCoupon(Coupon coupon);
+    boolean getOneCoupon(int couponID);
     void updateCoupon(Coupon coupon);
     void deleteCoupon(int couponID);
     List<Coupon> getAllCoupons();

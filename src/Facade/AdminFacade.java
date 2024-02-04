@@ -88,7 +88,7 @@ public class AdminFacade extends ClientFacade {
     }
 
     @Override
-    public boolean login(String email, String password) throws SQLException {
+    public Sql.Customer login(String email, String password) throws SQLException {
         return false;
     }
 

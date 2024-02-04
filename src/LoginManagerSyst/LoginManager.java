@@ -26,12 +26,13 @@ public class LoginManager {
         return instance;
     }
 
-    public ClientFacade login(String email, String password, ClientType clientType) throws LoginException, SQLException {
+    public ClientFacade login(String email, String password, ClientType clientType) throws LoginException, SQLException, IllegalArgumentException {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Email and password cannot be null");
         }
         switch (clientType) {
             case company:
+///whgat is the problem
                 return new CompanyFacade(email, password);
             case customer:
                 return new CustomerFacade(email, password);
