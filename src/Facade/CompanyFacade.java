@@ -95,16 +95,19 @@ public class CompanyFacade extends ClientFacade {
         return couponsDAO.getAllCouponsUpToPriceAndCompany(price, companyId);
     }
 
-    public Object returnCompanyDetails(String email, String password) {
+    public String returnCompanyDetails(String email, String password) {
         try {
+            if (email == null || password == null) {
+                return "Email or password cannot be null";
+            }
+
             if (companiesDAO.isCompanyExists(email, password)) {
-                return companiesDAO.getCompanyDetails(email);
+                return String.valueOf(companiesDAO.getCompanyDetails(email));
             } else {
                 return "Login failed";
             }
         } catch (SQLException e) {
-            handleSQLException(e);
-            return "An error occurred while fetching company details";
+            return "An error occurred while fetching company details. Please try again later.";
         }
     }
 }

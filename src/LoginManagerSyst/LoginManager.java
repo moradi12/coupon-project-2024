@@ -32,6 +32,7 @@ public class LoginManager {
         }
         switch (clientType) {
             case company:
+                // Create CompanyFacade instance with provided email and password
                 return new CompanyFacade(email, password);
             case customer:
                 return new CustomerFacade(email, password);

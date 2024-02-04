@@ -19,13 +19,13 @@ public class DBmanager {
 
 
 
-    // Method to establish a database connection
+    // establish a database connection
     public static Connection getConnection() throws SQLException {
         try {
             // Register the JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Create and return the database connection using try-with-resources
+            // Create and return the database connection
             return DriverManager.getConnection(URL, SQL_USER, SQL_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             throw new SQLException("Error establishing database connection", e);

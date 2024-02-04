@@ -5,7 +5,11 @@ import DAO.CouponsDAO;
 import beans.Category;
 import beans.Coupon;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CouponsDBDAO implements CouponsDAO {
@@ -13,7 +17,33 @@ public class CouponsDBDAO implements CouponsDAO {
 
     @Override
     public void addCoupon(Coupon coupon) {
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO COUPONS (id, companyId, category, title, description, start_date, end_date, amount, price, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+            statement.setString(1, String.valueOf(coupon.getId()));
+            statement.setString(2, String.valueOf(coupon.getCompanyId()));
+            statement.setString(3, String.valueOf(coupon.getCategory()));
+            statement.setString(4, coupon.getTitle());
+            statement.setString(5, coupon.getDescription());
+            statement.setString(6, String.valueOf(coupon.getStartDate()));
+            statement.setString(7, String.valueOf(coupon.getEndDate()));
+            statement.setString(8, String.valueOf(coupon.getAmount()));
+            statement.setString(9, String.valueOf(coupon.getPrice()));
+            statement.setString(10, coupon.getImage());
+
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error adding coupon: " + e.getMessage());
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+
+
+        }
     }
 
     @Override
@@ -27,13 +57,12 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     @Override
-    public ArrayList<Coupon> getAllCoupons() {
+    public List<Coupon> getAllCoupons() {
         return null;
     }
 
     @Override
     public boolean addCouponPurchase(int customerID, int couponID) {
-
         return false;
     }
 
@@ -44,9 +73,6 @@ public class CouponsDBDAO implements CouponsDAO {
 
     @Override
     public void deleteCouponPurchaseHistory(int couponID) {
-        // Implement the logic to delete purchase history associated with the coupon
-        System.out.println("Deleting purchase history for coupon with ID: " + couponID);
-
 
     }
 
@@ -64,6 +90,4 @@ public class CouponsDBDAO implements CouponsDAO {
     public List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId) {
         return null;
     }
-
-
 }
