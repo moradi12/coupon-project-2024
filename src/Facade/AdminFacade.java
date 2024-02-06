@@ -14,13 +14,8 @@ public class AdminFacade extends ClientFacade {
     private static final String ADMIN_EMAIL = "admin@admin.com";
     private static final String ADMIN_PASSWORD = "admin";
 
-    public AdminFacade(CompaniesDAO companiesDAO, CustomersDAO customersDAO) throws SQLException {
-        super();
-        this.companiesDAO = companiesDAO;
-        this.customersDAO = customersDAO;
-    }
-
-    public AdminFacade(String email, String password) {
+    public AdminFacade(String email, String password) throws SQLException {
+        super(email, password);
     }
 
     public void addCompany(Company company) throws AdminException {
@@ -63,15 +58,17 @@ public class AdminFacade extends ClientFacade {
         }
     }
 
+
     public void updateCustomer(Customer customer) throws AdminException {
         try {
             customersDAO.updateCustomer(customer);
-        } catch (AdminException e) {
+        } catch (Exception e) {
             throw new AdminException("Failed to update customer. Reason: " + e.getMessage());
         }
     }
 
-    public void deleteCustomer(int customerId) {
+
+    public void deleteCustomer(int customerId) throws AdminException {
         try {
             customersDAO.deleteCustomer(customerId);
         } catch (AdminException e) {
@@ -88,8 +85,12 @@ public class AdminFacade extends ClientFacade {
     }
 
     @Override
-    public Sql.Customer login(String email, String password) throws SQLException {
-        return false;
+    public Customer login(String email, String password) throws AdminException {
+        if (email.equals(ADMIN_EMAIL) && password.equals(ADMIN_PASSWORD)) {
+            return new Customer();
+        } else {
+            throw new AdminException("Invalid email or password for admin login.");
+        }
     }
 
     public static class AdminException extends Exception {

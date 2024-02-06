@@ -7,11 +7,12 @@ import java.util.List;
 
 public interface CouponsDAO {
     void addCoupon(Coupon coupon);
-    boolean getOneCoupon(int couponID);
     void updateCoupon(Coupon coupon);
-    void deleteCoupon(int couponID);
+    void deleteCoupon(int couponID,int companyID);
     List<Coupon> getAllCoupons();
-    boolean addCouponPurchase(int customerID, int couponID);
+
+    void getOneCoupon(int couponID);
+    void addCouponPurchase(int customerID, int couponID);
     void deleteCouponPurchase(int customerID, int couponID);
     void deleteCouponPurchaseHistory(int couponID);
 
@@ -20,4 +21,5 @@ public interface CouponsDAO {
     List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId);
 
     List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId);
+
 }

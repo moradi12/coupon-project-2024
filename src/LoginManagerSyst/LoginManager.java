@@ -1,12 +1,9 @@
-// LoginManager.java
 package LoginManagerSyst;
-
-import Clients.ClientType;
 import Facade.AdminFacade;
 import Facade.ClientFacade;
 import Facade.CompanyFacade;
 import Facade.CustomerFacade;
-
+import Clients.ClientType;
 import javax.security.auth.login.LoginException;
 import java.sql.SQLException;
 
@@ -25,25 +22,31 @@ public class LoginManager {
         }
         return instance;
     }
+//IllegalArgumentException/// למה זאת האופציה היחידה להוספה ?
 
     public ClientFacade login(String email, String password, ClientType clientType) throws LoginException, SQLException, IllegalArgumentException {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Email and password cannot be null");
         }
+
+        ClientFacade facade;
         switch (clientType) {
             case company:
-///whgat is the problem
-                return new CompanyFacade(email, password);
+                facade = new CompanyFacade(email, password);
+                break;
             case customer:
-                return new CustomerFacade(email, password);
+                facade = new CustomerFacade(email,password);
+                break;
             case administrator:
                 if (!email.equals("admin@admin.com") || !password.equals("admin")) {
                     throw new LoginException("Invalid email or password for admin");
                 }
-                return new AdminFacade(email, password);
+                facade = new AdminFacade(email, password);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid client type: " + clientType);
         }
+        return facade;
     }
 
     public void logout(ClientFacade facade) {

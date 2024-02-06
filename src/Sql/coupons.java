@@ -28,5 +28,7 @@ public class coupons {
 
     // Get coupon by ID
     public static final String getCouponById = "SELECT * FROM `couponnnn`.`coupons` WHERE ID=?";
+
+    public static final String getOneCoupon = "SELECT * FROM `couponnnn`.`coupons` WHERE TITLE=? LIMIT 1";
 }
 

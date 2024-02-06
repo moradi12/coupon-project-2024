@@ -1,6 +1,6 @@
 package Sql;
 
-public class Customer {
+public class Customer_sql {
 
     public static final String CREATE_TABLE_CUSTOMERS =
             "CREATE TABLE IF NOT EXISTS `couponnnn`.`customers` (" +
@@ -18,13 +18,16 @@ public class Customer {
             "(`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`) " +
             "VALUES (?, ?, ?, ?);";
 
+    // Update an existing customer
+    public static final String updateCustomer = "UPDATE customers SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
+
     // Get all customers
     public static final String getAllCustomers = "SELECT * FROM `couponnnn`.`customers`";
 
     // Get customer by email
     public static final String getCustomerByEmail = "SELECT * FROM `couponnnn`.`customers` WHERE EMAIL=?";
 
-    // Insert a customer-coupon relationship
+    public static final String getCustomer = "SELECT * FROM `couponnnn`.`customers` WHERE ID=?";
     public static final String addCustomerCouponRelation = "INSERT INTO `couponnnn`.`customers_vs_coupons` " +
             "(`CUSTOMER_ID`, `COUPON_ID`) " +
             "VALUES (?, ?);";
@@ -34,4 +37,4 @@ public class Customer {
             "JOIN `couponnnn`.`customers_vs_coupons` ON `coupons`.`ID` = `customers_vs_coupons`.`COUPON_ID` " +
             "WHERE `customers_vs_coupons`.`CUSTOMER_ID` = ?";
 
-}
+    public static final String deleteCustomer = "DELETE FROM `couponnnn`.`customers` WHERE ID = ?";}

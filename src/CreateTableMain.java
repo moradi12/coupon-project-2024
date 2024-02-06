@@ -1,9 +1,9 @@
 import CLS.DBmanager;
 import CLS.DButils;
-import Sql.categories;
+import Sql.Categories;
 import Sql.companies;
 import Sql.coupons;
-import Sql.Customer;
+import Sql.Customer_sql;
 import Sql.customers_vs_coupons;
 
 import java.sql.Connection;
@@ -17,10 +17,10 @@ public class CreateTableMain {
             DButils.runQuery("USE couponnnn");
 
             connection.setAutoCommit(false);
-            createTable(connection, categories.CREATE_TABLE_CATEGORIES);
+            createTable(connection, Categories.CREATE_TABLE_CATEGORIES);
             createTable(connection, companies.CREATE_TABLE_COMPANIES);
             createTable(connection, coupons.CREATE_TABLE_COUPONS);
-            createTable(connection, Customer.CREATE_TABLE_CUSTOMERS);
+            createTable(connection, Customer_sql.CREATE_TABLE_CUSTOMERS);
             createTable(connection, customers_vs_coupons.CREATE_TABLE_CVC);
 
 

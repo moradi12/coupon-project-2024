@@ -1,21 +1,17 @@
 package beans;
 
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Date;
+
+
 @Data
 @AllArgsConstructor
-
 public class Coupon {
-    // Fields
-
-
     private final int id;
     private final int companyId;
-    private Category category;
+    private final Category category;
     private String title;
     private String description;
     private Date startDate;

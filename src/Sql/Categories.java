@@ -1,7 +1,7 @@
 // categories class
 package Sql;
 
-public class categories {
+public class Categories {
     public static final String CREATE_TABLE_CATEGORIES =
             "CREATE TABLE IF NOT EXISTS `couponnnn`.`categories` (" +
                     "`ID` INT NOT NULL AUTO_INCREMENT, " +
@@ -10,14 +10,15 @@ public class categories {
                     "`CREATED_AT` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "PRIMARY KEY (`ID`));";
 
-    // Insert a new category
-    public static final String addCategory = "INSERT INTO `couponnnn`.`categories` " +
+    // Insert a new category query
+    public static final String ADD_CATEGORY = "INSERT INTO `couponnnn`.`categories` " +
             "(`NAME`, `DESCRIPTION`) " +
-            "VALUES (?, ?);";
+            "VALUES (?, ?)";
 
-    // Get all categories
-    public static final String getAllCategories = "SELECT * FROM `couponnnn`.`categories`";
+    // Get all categories query
+    public static final String GET_ALL_CATEGORIES = "SELECT * FROM `couponnnn`.`categories`";
 
-    // Get category by ID
-    public static final String getCategoryById = "SELECT * FROM `couponnnn`.`categories` WHERE ID=?";
+    // Get category by ID query
+    public static final String GET_CATEGORY_BY_ID = "SELECT * FROM `couponnnn`.`categories` WHERE ID=?";
+
 }
