@@ -20,6 +20,14 @@ public abstract class ClientFacade {
         this.isLogged = false;
         System.out.println("ClientFacade instance created.");
     }
+    /**
+     * Constructor for ClientFacade with email and password.
+     * @param email The email of the client.
+     * @param password The password of the client.
+     */
+
+
+
 
     public ClientFacade(String email, String password) {
         this();
@@ -29,6 +37,13 @@ public abstract class ClientFacade {
             System.out.println("Login failed: " + e.getMessage());
         }
     }
+
+    /**
+     * Abstract method for login functionality.
+     * @param email The email of the client.
+     * @param password The password of the client.
+     * @return A Customer object upon successful login.
+     */
 
     public abstract Customer login(String email, String password) throws SQLException, AdminFacade.AdminException;
 

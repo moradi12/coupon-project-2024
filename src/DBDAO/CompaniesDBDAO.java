@@ -18,6 +18,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
     public CompaniesDBDAO() {
     }
 
+
+
     @Override
     public boolean isCompanyExists(String email, String password) throws SQLException {
         try (Connection connection = connectionPool.getConnection();

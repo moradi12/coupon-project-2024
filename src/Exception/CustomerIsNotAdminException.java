@@ -1,4 +1,7 @@
 package Exception;
 
-public class CustomerIsNotAdminException {
+public class CustomerIsNotAdminException extends Exception {
+    public CustomerIsNotAdminException(String message) {
+        super(message);
+    }
 }

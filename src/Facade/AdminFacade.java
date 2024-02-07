@@ -1,6 +1,7 @@
 package Facade;
 
 import DAO.CompaniesDAO;
+import DAO.CouponsDAO;
 import DAO.CustomersDAO;
 import beans.Company;
 import beans.Customer;
@@ -11,8 +12,17 @@ import java.util.List;
 public class AdminFacade extends ClientFacade {
     private CompaniesDAO companiesDAO;
     private CustomersDAO customersDAO;
+
     private static final String ADMIN_EMAIL = "admin@admin.com";
     private static final String ADMIN_PASSWORD = "admin";
+
+    /**
+     * Constructor for AdminFacade.
+     *
+     * @param email    The email of the admin.
+     * @param password The password of the admin.
+     * @throws SQLException If there is an SQL exception.
+     */
 
     public AdminFacade(String email, String password) throws SQLException {
         super(email, password);
@@ -57,7 +67,13 @@ public class AdminFacade extends ClientFacade {
             throw new AdminException("Failed to retrieve company. Reason: " + e.getMessage());
         }
     }
-
+    public void addCustomer(Customer customer) throws AdminException {
+        try {
+            customersDAO.addCustomer(customer);
+        } catch (Exception e) {
+            throw new AdminException("Failed to create a new customer. Reason: " + e.getMessage());
+        }
+    }
 
     public void updateCustomer(Customer customer) throws AdminException {
         try {
@@ -66,6 +82,7 @@ public class AdminFacade extends ClientFacade {
             throw new AdminException("Failed to update customer. Reason: " + e.getMessage());
         }
     }
+
 
 
     public void deleteCustomer(int customerId) throws AdminException {

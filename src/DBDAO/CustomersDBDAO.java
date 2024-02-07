@@ -5,8 +5,7 @@ import DAO.CustomersDAO;
 import Facade.AdminFacade;
 import Sql.Customer_sql;
 import beans.Customer;
-import com.mysql.cj.xdevapi.Client;
-
+import Exception.CouponAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,17 +129,14 @@ public class CustomersDBDAO implements CustomersDAO {
         return customer;
     }
 
+    public void buyCupon(int customerId, int couponId) throws CouponAlreadyExistsException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Customer_sql.buyCupon)) {
+            statement.setInt(1, customerId);
+            statement.setInt(2, couponId);
+            statement.executeUpdate();
+
+        } catch (SQLException | InterruptedException e) {
+            throw new CouponAlreadyExistsException("Error buying coupon: " + e.getMessage());        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

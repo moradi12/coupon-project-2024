@@ -11,9 +11,15 @@ import java.util.List;
 
 public class CompanyFacade extends ClientFacade {
 
-    private final CompaniesDAO companiesDAO;
-    private final CouponsDAO couponsDAO;
-    private final int companyId;
+    private  CompaniesDAO companiesDAO;
+    private  CouponsDAO couponsDAO;
+    private  int companyId;
+
+    /**
+     * Constructor for CompanyFacade.
+     * @param email The email of the company.
+     * @param password The password of the company.
+     */
 
     public CompanyFacade(String email, String password) {
         super(email, password);
@@ -22,7 +28,10 @@ public class CompanyFacade extends ClientFacade {
         this.couponsDAO = couponsDAO;
     }
 
-    // Method to add a coupon
+
+
+    //  add a coupon
+
     public void addCoupon(Coupon coupon) {
         try {
             if (!isCouponTitleExists(coupon.getTitle())) {
@@ -34,8 +43,7 @@ public class CompanyFacade extends ClientFacade {
             handleSQLException(e);
         }
     }
-
-    // Method to update a coupon
+    //  update a coupon
     public void updateCoupon(Coupon coupon) {
         try {
             if (isCouponExists(coupon.getId())) {
@@ -48,7 +56,7 @@ public class CompanyFacade extends ClientFacade {
         }
     }
 
-    // Method to delete a coupon
+    //  delete a coupon
     public void deleteCoupon(int couponID) {
         try {
             if (isCouponExists(couponID)) {
@@ -62,34 +70,19 @@ public class CompanyFacade extends ClientFacade {
         }
     }
 
-    // Method to get all coupons
+    //  get all coupons
     public List<Coupon> getAllCoupons() {
-        try {
-            return couponsDAO.getAllCouponsByCompany(companyId);
-        } catch (SQLException e) {
-            handleSQLException(e);
-            return null;
-        }
+        return couponsDAO.getAllCouponsByCompany(companyId);
     }
 
-    // Method to get all coupons by category
+    //  get all coupons by category
     public List<Coupon> getAllCouponsByCategory(Category category) {
-        try {
-            return couponsDAO.getAllCouponsByCategoryAndCompany(category, companyId);
-        } catch (SQLException e) {
-            handleSQLException(e);
-            return null;
-        }
+        return couponsDAO.getAllCouponsByCategoryAndCompany(category, companyId);
     }
 
-    // Method to get all coupons by up to a certain price
+    //  get all coupons by up to a certain price
     public List<Coupon> getAllCouponsByUpToPrice(double price) {
-        try {
-            return couponsDAO.getAllCouponsUpToPriceAndCompany(price, companyId);
-        } catch (SQLException e) {
-            handleSQLException(e);
-            return null;
-        }
+        return couponsDAO.getAllCouponsUpToPriceAndCompany(price, companyId);
     }
 
 
@@ -102,7 +95,7 @@ public class CompanyFacade extends ClientFacade {
         }
     }
 
-    // Helper method to check if a coupon with the same title already exists
+    //  check if a coupon with the same title already exists
     private boolean isCouponTitleExists(String title) throws SQLException {
         List<Coupon> companyCoupons = couponsDAO.getAllCoupons();
         return companyCoupons.stream()
@@ -110,19 +103,13 @@ public class CompanyFacade extends ClientFacade {
                         existingCoupon.getTitle().equals(title));
     }
 
-    // Helper method to check if a coupon exists
+    //  check if a coupon exists
     private boolean isCouponExists(int couponID) throws SQLException {
         List<Coupon> companyCoupons = couponsDAO.getAllCoupons();
         return companyCoupons.stream()
                 .anyMatch(existingCoupon -> existingCoupon.getId() == couponID &&
                         existingCoupon.getCompanyId() == companyId);
     }
-
-    // Handle SQLException
-//    private void handleSQLException(SQLException e) {
-//        // Log the exception
-//        System.out.println("SQL Exception occurred:");
-//    }
 
     @Override
     public Customer login(String email, String password) throws SQLException, AdminFacade.AdminException {

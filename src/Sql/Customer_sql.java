@@ -37,4 +37,7 @@ public class Customer_sql {
             "JOIN `couponnnn`.`customers_vs_coupons` ON `coupons`.`ID` = `customers_vs_coupons`.`COUPON_ID` " +
             "WHERE `customers_vs_coupons`.`CUSTOMER_ID` = ?";
 
-    public static final String deleteCustomer = "DELETE FROM `couponnnn`.`customers` WHERE ID = ?";}
+
+    public static final String deleteCustomer = "DELETE FROM `couponnnn`.`customers` WHERE ID = ?";
+    public static final String buyCupon = "INSERT INTO `couponnnn`.`customer_coupon` (`CUSTOMER_ID`, `COUPON_ID`) VALUES (?, ?)";}
+

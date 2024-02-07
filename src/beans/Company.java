@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
@@ -7,7 +8,7 @@ public class Company {
     private String name;
     private String email;
     private String password;
-    private List<Coupon> coupons;
+    private ArrayList<Coupon> coupons;
 
     public Company(int id, String name) {
         this.id = id;
@@ -53,7 +54,7 @@ public class Company {
         return coupons;
     }
 
-    public void setCoupons(List<Coupon> coupons) {
+    public void setCoupons(ArrayList<Coupon> coupons) {
         this.coupons = coupons;
     }
 
@@ -63,5 +64,16 @@ public class Company {
     public int getInteger() {
 
         return 0; //
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", coupons=" + coupons +
+                '}';
     }
 }
