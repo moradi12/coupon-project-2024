@@ -6,7 +6,7 @@ import beans.Company;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CompaniesDAO {
+public interface CompaniesDBDAO {
 
     boolean isCompanyExists(String email, String password) throws SQLException;
     void addCompany(Company company) throws SQLException, AdminFacade.AdminException;

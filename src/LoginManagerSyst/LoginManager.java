@@ -40,8 +40,6 @@ public class LoginManager {
          * @return The facade corresponding to the logged-in client.
 
          */
-
-
         ClientFacade facade;
         switch (clientType) {
             case company:

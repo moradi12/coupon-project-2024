@@ -3,7 +3,6 @@ package Facade;
 import DBDAO.CompaniesDBDAO;
 import DBDAO.CouponsDBDAO;
 import DBDAO.CustomersDBDAO;
-import beans.Customer;
 
 import java.sql.SQLException;
 
@@ -12,7 +11,6 @@ public abstract class ClientFacade {
     protected CompaniesDBDAO companiesDBDAO;
     protected CouponsDBDAO couponDBDAO;
     protected boolean isLogged;
-
     public ClientFacade() {
         this.customerDBDAO = new CustomersDBDAO();
         this.companiesDBDAO = new CompaniesDBDAO();
@@ -27,25 +25,34 @@ public abstract class ClientFacade {
      */
 
 
-
-
     public ClientFacade(String email, String password) {
         this();
         try {
-            login(email, password);
-        } catch (SQLException | AdminFacade.AdminException e) {
+            setLogged(login(email, password));
+            if (isLogged()) {
+                loginSuccessMessage();
+            } else {
+                System.out.println("Login failed: Invalid credentials.");
+            }
+        } catch (AdminFacade.AdminException e) {
             System.out.println("Login failed: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
+
     /**
      * Abstract method for login functionality.
-     * @param email The email of the client.
+     *
+     * @param email    The email of the client.
      * @param password The password of the client.
      * @return A Customer object upon successful login.
+     * @return True if login is successful, false otherwise.
      */
 
-    public abstract Customer login(String email, String password) throws SQLException, AdminFacade.AdminException;
+
+    public abstract boolean login(String email, String password) throws SQLException, AdminFacade.AdminException;
 
     protected boolean isLogged() {
         return isLogged;
@@ -56,9 +63,8 @@ public abstract class ClientFacade {
     }
 
     public void logout() {
-        isLogged = false;
-        System.out.println("Logged out.");
-    }
+        setLogged(false);;
+        System.out.println("Logged out.");    }
 
     protected void handleSQLException(SQLException e) {
         System.out.println("SQL Exception: " + e.getMessage());
@@ -67,4 +73,5 @@ public abstract class ClientFacade {
     protected void loginSuccessMessage() {
         System.out.println("Logged in successfully.");
     }
+
 }

@@ -1,7 +1,6 @@
 package DBDAO;
 
 import CLS.ConnectionPool;
-import DAO.CompaniesDAO;
 import beans.Company;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompaniesDBDAO implements CompaniesDAO {
+public class CompaniesDBDAO implements DAO.CompaniesDBDAO {
 
     private ConnectionPool connectionPool;
 

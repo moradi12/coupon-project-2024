@@ -26,21 +26,22 @@ public class CustomerFacade extends ClientFacade {
 
     /**
      * Logs in the customer.
-     * @param email The email of the customer.
+     *
+     * @param email    The email of the customer.
      * @param password The password of the customer.
      * @return The logged-in customer.
-     * @throws SQLException If there is an SQL exception.
+     * @throws SQLException               If there is an SQL exception.
      * @throws AdminFacade.AdminException If there is an admin-related exception.
      */
 
     @Override
-    public Customer login(String email, String password) throws SQLException, AdminFacade.AdminException {
+    public boolean login(String email, String password) throws SQLException, AdminFacade.AdminException {
         if (customerDBDAO.isCustomerExists(email, password)) {
             Customer customer = customerDBDAO.getOneCustomer(Integer.parseInt(email));
             this.customerID = customer.getId();
-            return customer;
+            return true;
         }
-        return null;
+        return false ;
     }
 
     /**

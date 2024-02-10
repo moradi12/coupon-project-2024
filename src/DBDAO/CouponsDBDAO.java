@@ -1,23 +1,23 @@
 package DBDAO;
 
-import beans.Category;
 import CLS.ConnectionPool;
-import DAO.CouponsDAO;
+import beans.Category;
 import beans.Coupon;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class CouponsDBDAO implements CouponsDAO {
+public class CouponsDBDAO implements DAO.CouponsDBDAO {
     private ConnectionPool connectionPool;
 
     private Map<Integer, Category> categoryIdToEnum = new HashMap<>();
 
     public CouponsDBDAO() {
         //Category IDs to enums
+        // Initialize category ID to enum mapping
         categoryIdToEnum.put(1, Category.Electricity);
         categoryIdToEnum.put(2, Category.Food);
         categoryIdToEnum.put(3, Category.Restaurant);
@@ -26,6 +26,30 @@ public class CouponsDBDAO implements CouponsDAO {
         categoryIdToEnum.put(6, Category.Hotels);
     }
 
+    private int getCategoryID(Category category) {
+        for (Map.Entry<Integer, Category> entry : categoryIdToEnum.entrySet()) {
+            if (entry.getValue() == category) {
+                return entry.getKey();
+            }
+        }
+        throw new IllegalArgumentException("Category not found: " + category);
+    }
+
+    private Coupon resultSetToCoupon(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("ID");
+        int companyId = resultSet.getInt("COMPANY_ID");
+        int categoryId = resultSet.getInt("CATEGORY_ID");
+        Category category = Category.fromInt(categoryId);
+        String title = resultSet.getString("TITLE");
+        String description = resultSet.getString("DESCRIPTION");
+        Date startDate = resultSet.getDate("START_DATE");
+        Date endDate = resultSet.getDate("END_DATE");
+        int amount = resultSet.getInt("AMOUNT");
+        double price = resultSet.getDouble("PRICE");
+        String image = resultSet.getString("IMAGE");
+
+        return new Coupon(id, companyId, category, title, description, startDate, endDate, amount, price, image);
+    }
 
     @Override
     public void addCoupon(Coupon coupon) {
@@ -50,7 +74,7 @@ public class CouponsDBDAO implements CouponsDAO {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            System.out.println("Error adding coupon: " + e.getMessage());
+            throw new RuntimeException("Error adding coupon: " + e.getMessage());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -77,47 +101,23 @@ public class CouponsDBDAO implements CouponsDAO {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error updating coupon: " + e.getMessage());
+            throw new RuntimeException("Error updating coupon: " + e.getMessage());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    //  companyID ???????האם יש צורך להוסיף statement של
     @Override
     public void deleteCoupon(int couponID, int companyID) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM COUPONS WHERE id = ?")) {
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM COUPONS WHERE id = ? AND company_id = ?")) {
             statement.setInt(1, couponID);
+            statement.setInt(2, companyID);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error deleting coupon with ID " + couponID + " for company ID " + companyID + ": " + e.getMessage(), e);
         } catch (InterruptedException e) {
-            throw new RuntimeException("Error deleting coupon with ID " + couponID + ": " + e.getMessage(), e);
-        }
-    }
-
-
-    private int getCategoryID(Category category) {
-        for (Map.Entry<Integer, Category> entry : categoryIdToEnum.entrySet()) {
-            if (entry.getValue() == category) {
-                return entry.getKey();
-            }
-        }
-        throw new IllegalArgumentException("Category not found: " + category);
-    }
-
-    @Override
-    public void getOneCoupon(int couponID) {
-        Coupon coupon;
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM `couponnnn`.`coupons` WHERE ID=? LIMIT 1")) {
-            statement.setInt(1, couponID);
-        } catch (SQLException e) {
-            System.out.println("Error while getting coupon: " + e.getMessage());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error deleting coupon with ID " + couponID + " for company ID " + companyID + ": " + e.getMessage(), e);
         }
     }
 
@@ -139,36 +139,39 @@ public class CouponsDBDAO implements CouponsDAO {
         return coupons;
     }
 
-
-
     @Override
     public void deleteCouponPurchase(int customerID, int couponID) {
-
+        // add
     }
 
     @Override
     public void deleteCouponPurchaseHistory(int couponID) {
-
+        // add
     }
 
     @Override
     public List<Coupon> getAllCouponsByCompany(int companyId) {
+        // add
         return null;
     }
 
     @Override
     public List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId) {
+        // add
         return null;
     }
 
     @Override
     public List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId) {
+        // add
         return null;
     }
 
-
-// האם יש צורך להוסיף גם ID של החברה ?
-
+    @Override
+    public List<Coupon> getExpiredCoupons(long currentTime) {
+        // add
+        return null;
+    }
 
     public void addCouponPurchase(int customerID, int couponID) {
         String query = "INSERT INTO `coupon_purchases` (`customer_id`, `coupon_id`) VALUES (?, ?)";
@@ -183,25 +186,14 @@ public class CouponsDBDAO implements CouponsDAO {
                 System.out.println("Failed to add coupon purchase.");
             }
         } catch (SQLException e) {
-            System.out.println("Error adding coupon purchase: " + e.getMessage());
+            throw new RuntimeException("Error adding coupon purchase: " + e.getMessage());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Coupon resultSetToCoupon(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("ID");
-        int companyId = resultSet.getInt("COMPANY_ID");
-        int categoryId = resultSet.getInt("CATEGORY_ID");
-        Category category = Category.fromInt(categoryId);
-        String title = resultSet.getString("TITLE");
-        String description = resultSet.getString("DESCRIPTION");
-        Date startDate = resultSet.getDate("START_DATE");
-        Date endDate = resultSet.getDate("END_DATE");
-        int amount = resultSet.getInt("AMOUNT");
-        double price = resultSet.getDouble("PRICE");
-        String image = resultSet.getString("IMAGE");
-
-        return new Coupon(id, companyId, category, title, description, startDate, endDate, amount, price, image);
+    @Override
+    public void getOneCoupon(int couponID) {
+        // Implementation
     }
 }

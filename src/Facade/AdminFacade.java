@@ -1,7 +1,6 @@
 package Facade;
 
-import DAO.CompaniesDAO;
-import DAO.CouponsDAO;
+import DAO.CompaniesDBDAO;
 import DAO.CustomersDAO;
 import beans.Company;
 import beans.Customer;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AdminFacade extends ClientFacade {
-    private CompaniesDAO companiesDAO;
+    private CompaniesDBDAO companiesDBDAO;
     private CustomersDAO customersDAO;
 
     private static final String ADMIN_EMAIL = "admin@admin.com";
@@ -30,7 +29,12 @@ public class AdminFacade extends ClientFacade {
 
     public void addCompany(Company company) throws AdminException {
         try {
-            companiesDAO.addCompany(company);
+            if (companiesDBDAO.isCompanyExists(company.getEmail(), company.getPassword())) {
+                throw new AdminException("Company already exists with email: " + company.getEmail());
+            } else {
+                companiesDBDAO.addCompany(company);
+            }
+            companiesDBDAO.addCompany(company);
         } catch (SQLException e) {
             throw new AdminException("Failed to add company. Reason: " + e.getMessage());
         }
@@ -38,7 +42,7 @@ public class AdminFacade extends ClientFacade {
 
     public void updateCompany(Company company) throws AdminException {
         try {
-            companiesDAO.updateCompany(company);
+            companiesDBDAO.updateCompany(company);
         } catch (SQLException e) {
             throw new AdminException("Failed to update company. Reason: " + e.getMessage());
         }
@@ -46,7 +50,7 @@ public class AdminFacade extends ClientFacade {
 
     public void deleteCompany(int companyId) throws AdminException {
         try {
-            companiesDAO.deleteCompany(companyId);
+            companiesDBDAO.deleteCompany(companyId);
         } catch (SQLException e) {
             throw new AdminException("Failed to delete company. Reason: " + e.getMessage());
         }
@@ -54,7 +58,7 @@ public class AdminFacade extends ClientFacade {
 
     public List<Company> getAllCompanies() throws AdminException {
         try {
-            return companiesDAO.getAllCompanies();
+            return companiesDBDAO.getAllCompanies();
         } catch (SQLException e) {
             throw new AdminException("Failed to retrieve companies. Reason: " + e.getMessage());
         }
@@ -62,11 +66,12 @@ public class AdminFacade extends ClientFacade {
 
     public Company getOneCompany(int companyId) throws AdminException {
         try {
-            return companiesDAO.getOneCompany(companyId);
+            return companiesDBDAO.getOneCompany(companyId);
         } catch (SQLException e) {
             throw new AdminException("Failed to retrieve company. Reason: " + e.getMessage());
         }
     }
+
     public void addCustomer(Customer customer) throws AdminException {
         try {
             customersDAO.addCustomer(customer);
@@ -84,7 +89,6 @@ public class AdminFacade extends ClientFacade {
     }
 
 
-
     public void deleteCustomer(int customerId) throws AdminException {
         try {
             customersDAO.deleteCustomer(customerId);
@@ -97,14 +101,21 @@ public class AdminFacade extends ClientFacade {
         try {
             return customersDAO.getAllCustomers();
         } catch (AdminException e) {
-            throw new AdminException("Failed to retrieve customers. Reason: " + e.getMessage());
+            throw new AdminException(STR."Failed to retrieve customers. Reason: \{e.getMessage()}");
         }
     }
 
+
     @Override
-    public Customer login(String email, String password) throws AdminException {
+    public boolean login(String email, String password) throws AdminException {
         if (email.equals(ADMIN_EMAIL) && password.equals(ADMIN_PASSWORD)) {
-            return new Customer();
+            // Check if the customer exists
+            if (customersDAO.isCustomerExists(email, password)) {
+                return true;
+
+            } else {
+                throw new AdminException("Customer does not exist.");
+            }
         } else {
             throw new AdminException("Invalid email or password for admin login.");
         }

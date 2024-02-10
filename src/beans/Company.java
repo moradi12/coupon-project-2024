@@ -4,11 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
+    //todo
+    // change to fin id and name +cons
     private int id;
     private String name;
     private String email;
     private String password;
     private ArrayList<Coupon> coupons;
+
+    public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.coupons = coupons;
+    }
 
     public Company(int id, String name) {
         this.id = id;

@@ -5,7 +5,7 @@ import beans.Coupon;
 
 import java.util.List;
 
-public interface CouponsDAO {
+public interface CouponsDBDAO {
     void addCoupon(Coupon coupon);
     void updateCoupon(Coupon coupon);
     void deleteCoupon(int couponID,int companyID);
@@ -21,5 +21,5 @@ public interface CouponsDAO {
     List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId);
 
     List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId);
-
+    List<Coupon> getExpiredCoupons(long currentTime);
 }
