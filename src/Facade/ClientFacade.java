@@ -1,20 +1,20 @@
 package Facade;
 
-import DBDAO.CompaniesDBDAO;
-import DBDAO.CouponsDBDAO;
+import DBDAO.CompaniesDAO;
+import DBDAO.CouponsDAO;
 import DBDAO.CustomersDBDAO;
 
 import java.sql.SQLException;
 
 public abstract class ClientFacade {
     protected CustomersDBDAO customerDBDAO;
-    protected CompaniesDBDAO companiesDBDAO;
-    protected CouponsDBDAO couponDBDAO;
+    protected CompaniesDAO companiesDBDAO;
+    protected CouponsDAO couponDBDAO;
     protected boolean isLogged;
     public ClientFacade() {
         this.customerDBDAO = new CustomersDBDAO();
-        this.companiesDBDAO = new CompaniesDBDAO();
-        this.couponDBDAO = new CouponsDBDAO();
+        this.companiesDBDAO = new CompaniesDAO();
+        this.couponDBDAO = new CouponsDAO();
         this.isLogged = false;
         System.out.println("ClientFacade instance created.");
     }

@@ -10,11 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD:src/DBDAO/CompaniesDBDAO.java
 public class CompaniesDBDAO implements DAO.CompaniesDBDAO {
+=======
+public class CompaniesDAO implements DAO.CompaniesDAO {
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CompaniesDAO.java
 
     private ConnectionPool connectionPool;
 
-    public CompaniesDBDAO() {
+    public CompaniesDAO() {
     }
 
 

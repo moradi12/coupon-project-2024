@@ -1,6 +1,10 @@
 package Facade;
 
+<<<<<<< HEAD
 import DAO.CompaniesDBDAO;
+=======
+import DAO.CompaniesDAO;
+>>>>>>> c870dfb (getOneCustomer update)
 import DAO.CustomersDAO;
 import beans.Company;
 import beans.Customer;
@@ -29,12 +33,21 @@ public class AdminFacade extends ClientFacade {
 
     public void addCompany(Company company) throws AdminException {
         try {
+<<<<<<< HEAD
             if (companiesDBDAO.isCompanyExists(company.getEmail(), company.getPassword())) {
                 throw new AdminException("Company already exists with email: " + company.getEmail());
             } else {
                 companiesDBDAO.addCompany(company);
             }
             companiesDBDAO.addCompany(company);
+=======
+            if (companiesDAO.isCompanyExists(company.getEmail(), company.getPassword())) {
+                throw new AdminException("Company already exists with email: " + company.getEmail());
+            } else {
+                companiesDAO.addCompany(company);
+            }
+            companiesDAO.addCompany(company);
+>>>>>>> c870dfb (getOneCustomer update)
         } catch (SQLException e) {
             throw new AdminException("Failed to add company. Reason: " + e.getMessage());
         }

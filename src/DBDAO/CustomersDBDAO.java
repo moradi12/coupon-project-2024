@@ -25,6 +25,17 @@ public class CustomersDBDAO implements CustomersDAO {
 
     }
 
+
+    /**
+     * Checks if a customer with the given email and password exists in the database.
+     * @param email The email of the customer.
+     * @param password The password of the customer.
+     * @return true if the customer exists, false otherwise.
+     */
+
+
+
+
     @Override
     public boolean isCustomerExists(String email, String password) {
         try (Connection connection = connectionPool.getConnection();
@@ -38,6 +49,8 @@ public class CustomersDBDAO implements CustomersDAO {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     public void addCustomer(Customer customer) {

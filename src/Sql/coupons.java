@@ -1,4 +1,3 @@
-// coupons class
 package Sql;
 
 public class coupons {
@@ -17,7 +16,6 @@ public class coupons {
                     "UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE" +
                     ");";
 
-
     // Insert a new coupon
     public static final String addCoupon = "INSERT INTO `couponnnn`.`coupons` " +
             "(`COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) " +
@@ -29,6 +27,10 @@ public class coupons {
     // Get coupon by ID
     public static final String getCouponById = "SELECT * FROM `couponnnn`.`coupons` WHERE ID=?";
 
+    // Get one coupon by title
     public static final String getOneCoupon = "SELECT * FROM `couponnnn`.`coupons` WHERE TITLE=? LIMIT 1";
-}
 
+    // Delete coupon purchase history by coupon ID
+    public static final String DELETECOUPON_PURCHASE_HISTORY_QUERY =
+            "DELETE FROM `coupon_purchases` WHERE `coupon_id` = ?";
+}

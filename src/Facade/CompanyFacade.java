@@ -10,8 +10,13 @@ import java.util.List;
 
 public class CompanyFacade extends ClientFacade {
 
+<<<<<<< HEAD
     private CompaniesDBDAO companiesDBDAO;
     private CouponsDBDAO couponsDBDAO;
+=======
+    private CompaniesDAO companiesDAO;
+    private CouponsDAO couponsDAO;
+>>>>>>> c870dfb (getOneCustomer update)
     private int companyId;
 
     public void setCompanyId(int companyId) {
@@ -34,6 +39,7 @@ public class CompanyFacade extends ClientFacade {
 
     @Override
     public boolean login(String email, String password) throws SQLException, AdminFacade.AdminException {
+<<<<<<< HEAD
         if ((companiesDBDAO.isCompanyExists(email, password))) {
             setCompanyId(companiesDBDAO.getCompanyDetails(email).getId());
             return true;
@@ -42,6 +48,24 @@ public class CompanyFacade extends ClientFacade {
     }
 
 
+=======
+        try {
+            if (companiesDAO.isCompanyExists(email, password)) {
+                int companyId = companiesDAO.getCompanyDetails(email).getId();
+                setCompanyId(companyId);
+                System.out.println("Login successful!");
+                return true;
+            } else {
+                System.out.println("Login failed. Invalid email or password.");
+                return false;
+            }
+        } catch (SQLException e) {
+            handleSQLException(e);
+            System.out.println("Login failed due to a database error. Please try again later.");
+            return false;
+        }
+    }
+>>>>>>> c870dfb (getOneCustomer update)
     //  add a coupon
 
     public void addCoupon(Coupon coupon) {

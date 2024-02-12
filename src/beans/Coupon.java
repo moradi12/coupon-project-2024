@@ -3,6 +3,8 @@ package beans;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 
@@ -19,6 +21,7 @@ public class Coupon {
     private Integer amount;
     private Double price;
     private String image;
+
 
     // Constructors
     }

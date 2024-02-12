@@ -1,21 +1,34 @@
 package DBDAO;
 
 import CLS.ConnectionPool;
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
+=======
+import Sql.coupons;
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
 import beans.Category;
 import beans.Coupon;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
 public class CouponsDBDAO implements DAO.CouponsDBDAO {
+=======
+public class CouponsDAO implements DAO.CouponsDAO {
+
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     private ConnectionPool connectionPool;
+
 
     private Map<Integer, Category> categoryIdToEnum = new HashMap<>();
 
-    public CouponsDBDAO() {
+    public CouponsDAO(ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
+
         //Category IDs to enums
         // Initialize category ID to enum mapping
         categoryIdToEnum.put(1, Category.Electricity);
@@ -26,6 +39,13 @@ public class CouponsDBDAO implements DAO.CouponsDBDAO {
         categoryIdToEnum.put(6, Category.Hotels);
     }
 
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
+=======
+    public CouponsDAO() {
+
+    }
+
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     private int getCategoryID(Category category) {
         for (Map.Entry<Integer, Category> entry : categoryIdToEnum.entrySet()) {
             if (entry.getValue() == category) {
@@ -141,19 +161,74 @@ public class CouponsDBDAO implements DAO.CouponsDBDAO {
 
     @Override
     public void deleteCouponPurchase(int customerID, int couponID) {
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
         // add
+=======
+        String query = "DELETE FROM `coupon_purchases` WHERE `customer_id` = ? AND `coupon_id` = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, customerID);
+            statement.setInt(2, couponID);
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Coupon purchase deleted successfully.");
+            } else {
+                System.out.println("No coupon purchase found for deletion.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting coupon purchase: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     }
 
     @Override
     public void deleteCouponPurchaseHistory(int couponID) {
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
         // add
+=======
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(coupons.DELETECOUPON_PURCHASE_HISTORY_QUERY)) {
+            statement.setInt(1, couponID);
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Coupon purchase history for coupon ID " + couponID + " deleted successfully.");
+            } else {
+                System.out.println("No coupon purchase history found for deletion for coupon ID " + couponID + ".");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting coupon purchase history: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     }
+
 
     @Override
     public List<Coupon> getAllCouponsByCompany(int companyId) {
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
         // add
         return null;
+=======
+        List<Coupon> coupons = new ArrayList<>();
+        String query = "SELECT * FROM `coupons` WHERE `company_id` = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, companyId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Coupon coupon = resultSetToCoupon(resultSet);
+                coupons.add(coupon);
+            }
+        } catch (SQLException | InterruptedException e) {
+            throw new RuntimeException("Error retrieving coupons by company ID: " + e.getMessage(), e);
+        }
+        return coupons;
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     }
+
 
     @Override
     public List<Coupon> getAllCouponsByCategoryAndCompany(Category category, int companyId) {
@@ -163,15 +238,70 @@ public class CouponsDBDAO implements DAO.CouponsDBDAO {
 
     @Override
     public List<Coupon> getAllCouponsUpToPriceAndCompany(double price, int companyId) {
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
         // add
         return null;
+=======
+        List<Coupon> coupons = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT * FROM coupons WHERE price <= ? AND company_id = ?")) {
+            statement.setDouble(1, price);
+            statement.setInt(2, companyId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Coupon coupon = new Coupon(
+                            resultSet.getInt("id"),
+                            resultSet.getInt("companyId"),
+                            Category.valueOf(resultSet.getString("category")),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            resultSet.getDate("startDate"),
+                            resultSet.getDate("endDate"),
+                            resultSet.getInt("amount"),
+                            resultSet.getDouble("price"),
+                            resultSet.getString("image")
+                    );
+                    coupons.add(coupon);
+                }
+            }
+        } catch (SQLException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return coupons;
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
     }
+///////////////helpp/
 
+    @Override
+
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
     @Override
     public List<Coupon> getExpiredCoupons(long currentTime) {
         // add
         return null;
     }
+=======
+
+    public List<Coupon> getExpiredCoupons(LocalDate currentDate) {
+        List<Coupon> expiredCoupons = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT * FROM `coupons` WHERE `expiration_date` <= ?")) {
+            statement.setDate(1, Date.valueOf(currentDate));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Coupon coupon = resultSetToCoupon(resultSet);
+                    expiredCoupons.add(coupon);
+                }
+            }
+        } catch (SQLException | InterruptedException e) {
+            throw new RuntimeException("Error expired coupons: " + e.getMessage(), e);
+        }
+        return expiredCoupons;
+    }
+
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java
 
     public void addCouponPurchase(int customerID, int couponID) {
         String query = "INSERT INTO `coupon_purchases` (`customer_id`, `coupon_id`) VALUES (?, ?)";
@@ -194,6 +324,11 @@ public class CouponsDBDAO implements DAO.CouponsDBDAO {
 
     @Override
     public void getOneCoupon(int couponID) {
+<<<<<<< HEAD:src/DBDAO/CouponsDBDAO.java
         // Implementation
     }
 }
+=======
+
+    }}
+>>>>>>> c870dfb (getOneCustomer update):src/DBDAO/CouponsDAO.java

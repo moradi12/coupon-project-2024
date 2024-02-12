@@ -12,6 +12,7 @@ import java.sql.Statement;
 
 public class CreateTableMain {
     public static void main(String[] args) {
+
         try (Connection connection = DBmanager.getConnection()) {
             DButils.runQuery("CREATE DATABASE IF NOT EXISTS couponnnn");
             DButils.runQuery("USE couponnnn");

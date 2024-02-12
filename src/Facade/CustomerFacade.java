@@ -12,6 +12,7 @@ public class CustomerFacade extends ClientFacade {
     private ConnectionPool connectionPool;
     private CustomersDBDAO customerDBDAO;
 
+
     /**
      * Constructor for CustomerFacade.
      * @param email The email of the customer.
@@ -21,6 +22,7 @@ public class CustomerFacade extends ClientFacade {
     public CustomerFacade(String email, String password) {
         connectionPool = ConnectionPool.getInstance();
         customerDBDAO = new CustomersDBDAO();
+
     }
 
 
